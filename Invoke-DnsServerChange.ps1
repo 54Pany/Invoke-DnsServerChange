@@ -6,7 +6,7 @@ function Invoke-DnsServerChange {
      -Dns            DNS Server IP Addr.
                 
 .DESCRIPTION
-
+    Date Modified: 2017-11-03
     Author: p4ny (@LESSNET)
     License: BSD 3-Clause
     Required Dependencies: None
