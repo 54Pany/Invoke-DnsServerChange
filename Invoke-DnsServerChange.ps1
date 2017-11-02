@@ -6,7 +6,7 @@ function Invoke-DnsServerChange {
      -Dns            DNS Server IP Addr.
                 
 .DESCRIPTION
-    Date Modified: 2017-11-03
+
     Author: p4ny (@LESSNET)
     License: BSD 3-Clause
     Required Dependencies: None
@@ -15,7 +15,7 @@ function Invoke-DnsServerChange {
 .EXAMPLE
     Change DNS Server
 
-    C:\PS> Invoke-DnsServerChange -Name 'Ethernet0' -Dns "119.29.29.29,114,114,114,114"
+    C:\PS> Invoke-DnsServerChange -Name 'Ethernet0' -Dns "119.29.29.29,114.114.114.114"
 #>
 
     param (
@@ -25,7 +25,7 @@ function Invoke-DnsServerChange {
         [string[]]$Dns
     )
     $Dns = $Dns.Split(',')
-    $InterfaceGuid = Get-NetAdapter -name $Name | Select -ExpandProperty 'InterfaceGuid'
+    $InterfaceGuid = Get-WmiObject win32_networkadapter -filter "netconnectionid = '$Name'" | Select -ExpandProperty 'GUID'
     $Guid = Get-WmiObject win32_networkadapterconfiguration -filter "SettingID = '$InterfaceGuid'"
     $Guid.SetDNSServerSearchOrder($Dns) | Out-Null
 
